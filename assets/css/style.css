@@ -1,0 +1,238 @@
+thead {
+    text-align: center;
+}
+
+table, th {
+    margin-top: 20px;
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #545755;
+}
+
+td {
+    margin-top: 20px;
+    width: 100%;
+    border: 2px solid #545755;
+}
+
+.table-container {
+    flex-basis: 50%; /* Lățime inițială de 50% din container */
+    /* table-layout: fixed; */
+    table-layout: auto;
+    max-height: 700px; /* înălțimea dorită */
+    overflow-y: auto; /* scroll vertical */
+    overflow-x: auto; /* scroll orizontal, dacă este necesar */
+    border: 1px solid #ccc; /* bordură pentru a vizualiza mai bine containerul */
+
+}
+
+.bifate{
+    display: grid;
+  grid-template-columns: 200px 50%; 
+}
+
+.container {
+    max-height: 800px; /* înălțimea dorită */
+
+}
+
+.tab_stinga, .tab_dreapta {
+    box-sizing: border-box;
+    padding: 10px;
+
+}
+
+.tab_stinga {
+    width: 50%;
+    float: left;
+    max-width: 40%;
+}
+
+.tab_dreapta {
+    width: 60%;
+    float: right;
+    overflow-x: auto;
+
+}
+/*sursa 06/styles.css*/
+
+body {
+    background: rgb(186, 206, 207)
+}
+
+
+ul {
+    list-style: none;
+    line-height: 2em;
+
+}
+
+ul summary {
+    position: relative;
+    cursor: pointer;
+}
+
+summary {
+    list-style: none;
+}
+
+ul summary::-webkit-details-marker {
+    display: none;
+}
+
+ul li {
+    position: relative;
+    /*outline: 1px solid green; !*chenar verde*!*/
+}
+
+
+ul li::before, ul li::after {
+    position: absolute;
+    left: -30px;
+    border-left: 2px solid #7d7d7d;
+    content: "";
+}
+
+ul li::before {
+    top: 0px;
+    border-bottom: 2px solid #7d7d7d;
+    width: 25px;
+    height: 1em;
+}
+
+ul li::after {
+    bottom: 0px;
+    padding-left: 20px;
+    width: 8px;
+    height: 100%;
+}
+
+ul li:last-child::after {
+    display: none;
+}
+
+
+/*stergem liniile la parinte*/
+ul.tree > li:after, ul.tree > li:before {
+
+    display: none;
+
+}
+
+ul summary::before {
+    position: absolute;
+    left: -37.5px;
+    top: .55em;
+    content: "+";
+    background: #80ff80;
+    display: block;
+    width: 15px;
+    height: 15px;
+    border-radius: 50px;
+    z-index: 999;
+    text-align: center;
+    line-height: .80em;
+}
+
+
+ul details[open] > summary::before {
+    content: "-";
+    background-color: #02f670;
+
+}
+
+.bifate-list {
+    top: 5px;
+    text-align: left;
+    position: static;
+    align-items: flex-start;
+    table-layout: fixed;
+}
+
+span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+
+.header {
+    background-color: #0b8d73;
+    color: #fff;
+    padding: 15px;
+
+}
+
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    margin-top: 10px;
+
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+
+}
+
+.antet {
+    position: sticky;
+    top: 0;
+    background-color: #61c4eb; /* Setați culoarea de fundal pentru antet */
+    z-index: 10; /* Asigură-te că antetul este deasupra celorlalte rânduri */
+    box-shadow: 0 2px 2px -1px rgba(144, 186, 209, 0.4); /* Adaugă o umbră pentru a sublinia efectul sticky */
+}
+
+
+.subsol {
+    position: sticky;
+    bottom: 0;
+    background-color: #61eb63; /* Setați culoarea de fundal pentru antet */
+    z-index: 10; /* Asigură-te că antetul este deasupra celorlalte rânduri */
+    box-shadow: 0 2px 2px -1px rgba(144, 186, 209, 0.4); /* Adaugă o umbră pentru a sublinia efectul sticky */
+}
+
+
+.button {
+    background-color: #002eff; /* Red */
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+
+.button:hover {
+    background-color: #c11c1c; /* Darker red */
+}
+
+
+.success-message {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
