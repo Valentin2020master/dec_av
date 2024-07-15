@@ -1,9 +1,10 @@
 <?php
-include 'includes/db.php';
+include '../includes/db.php';
 
 $pt = $_POST['pt'];
 
-$sql = "SELECT oficiu, statiune, fider, pt, casnici, economici, localitatea, adresa, apartenenta FROM pdc1 WHERE pt = ?";
+
+$sql = "SELECT oficiu, statiune, fider, pt, casnici, economici, localitatea, adresa, apartenenta FROM pdc3 WHERE pt = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param('s', $pt);
 $stmt->execute();

@@ -1,7 +1,7 @@
 <?php
-include 'includes/db.php';
+include '../includes/db.php';
 
-$sql = "SELECT pt_id FROM stare_bifata WHERE bifat = 1";
+$sql = "SELECT pt_id FROM bifate1 WHERE bifat = 1";
 $result = $conn->query($sql);
 
 $checkedItems = [];
@@ -12,4 +12,6 @@ if ($result->num_rows > 0) {
 }
 
 echo json_encode($checkedItems);
+
+$conn->close();
 ?>

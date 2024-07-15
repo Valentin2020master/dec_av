@@ -2,7 +2,7 @@ function reloadPage() {
     location.reload();
 }
 
-setInterval(reloadPage, 10000); // Reîncarcă la fiecare 30 de secunde
+setInterval(reloadPage, 30000); // Reîncarcă la fiecare 30 de secunde
 
 function submitForm() {
     document.getElementById('filterForm').submit();
