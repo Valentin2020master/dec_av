@@ -4,6 +4,8 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
 }
+
+
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +30,7 @@ if (!isset($_SESSION['user_id'])) {
                 <table>
                     <thead>
                     <tr>
-                        <th>PDC1</th>
+                        <th>PDC1_____</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -79,7 +81,7 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 
 </main>
-<script src="../assets/js/script1.js"></script>
+<script src="../assets/js/script.js"></script>
 
 <?php //include "includes/footer.php"?>
 </body>

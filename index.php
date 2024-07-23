@@ -6,37 +6,35 @@ if (!isset($_SESSION['user_id'])) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="ro">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="creator" content="RED-Nord">
+    <link rel="icon" type="image/x-icon" href="./assets/imagis/red.gif">
     <title>RED-Nord</title>
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
 </head>
 <body>
-<?php include "includes/header.php" ?>
+<?php require_once "./includes/header.php" ?>
 <main>
-    <div>
-        <button id="deselecteaza-toate" class="button">Deselectează toate</button>
-        <a href="../actions/logout.php" class="button">Delogare</a>
-    </div>
     <div class="container">
         <div class="tab_stinga">
             <div class="table-container">
                 <table>
-                    <thead>
+                    <thead class="antet">
                     <tr>
-                        <th>PDC1</th>
+                        <th><?php echo strtoupper(htmlspecialchars($_SESSION['username'])); ?></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
                         <td id="principal-list" class="tree">
                             <?php
-                            include '../includes/db.php';
-                            include '../functions/functie.php';
+                            require_once './includes/db.php';
+                            require_once './functions/functie.php';
                             $parentConditions = "1=1";
                             fetchNodes($parentConditions, 0, $conn);
                             ?>
@@ -51,12 +49,12 @@ if (!isset($_SESSION['user_id'])) {
                 <table>
                     <thead class="antet">
                     <tr>
-                        <th>Oficiu</th>
+                        <th class="oficiu">Oficiu</th>
                         <th>Statiune</th>
-                        <th>Fiderul</th>
+                        <th class="oficiu">Fiderul</th>
                         <th>PT</th>
-                        <th>Casnici</th>
-                        <th>Economici</th>
+                        <th class="oficiu">Casnici</th>
+                        <th class="oficiu">Economici</th>
                         <th>Localitatea</th>
                         <th>Adresa</th>
                         <th>Apartenenta</th>
@@ -67,10 +65,11 @@ if (!isset($_SESSION['user_id'])) {
                     <!-- Lista în care vor apărea elementele bifate -->
                     </tbody>
                     <tr>
+                    <tr>
                         <td colspan="4" class="subsol">Total</td>
-                        <td class="subsol"><?php ?></td>
-                        <td class="subsol"><?php ?></td>
-                        <td colspan="3" class="subsol"><?php ?></td>
+                        <td id="total-casnici" class="subsol">0</td>
+                        <td id="total-economici" class="subsol">0</td>
+                        <td colspan="3" id="localitati-unice" class="subsol"></td>
                     </tr>
                 </table>
             </div>
@@ -79,8 +78,10 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 
 </main>
-<script src="../assets/js/script.js"></script>
-
-<?php //include "includes/footer.php"?>
+<script src="./assets/js/script.js"></script>
+<script>
+    
+</script>
+<?php require_once "includes/footer.php"?>
 </body>
 </html>

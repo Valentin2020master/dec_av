@@ -3,8 +3,14 @@ session_start();
 include 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = trim($_POST['username']);
+    $password = trim($_POST['password']);
+
+    if (empty($username) || empty($password)) {
+        $_SESSION['error'] = "Toate câmpurile sunt obligatorii.";
+        header("Location: ../actions/login.php");
+        exit();
+    }
 
     $sql = "SELECT * FROM users WHERE username = ?";
     $stmt = $conn->prepare($sql);
@@ -16,22 +22,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($user && password_verify($password, $user['password'])) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role']; // Stocăm rolul utilizatorului în sesiune
 
-        // Redirecționare bazată pe numele utilizatorului
-        if ($username == 'admin') {
-            header("Location: admin.php");
-        } elseif ($username == 'pdc1') {
-            header("Location: ../pages/pdc1.php");
-        } elseif ($username == 'pdc2') {
-            header("Location: ../pages/pdc2.php");
-        } elseif ($username == 'pdc3') {
-            header("Location: ../pages/pdc3.php");
-        } else {
-            header("Location: ../pages/index.php");
+        // Redirecționare bazată pe rolul utilizatorului
+        switch ($_SESSION['username']) {
+            case 'admin':
+                header("Location: ../pages/admin.php");
+                break;
+//            case 'pdc1':
+//                header("Location: ../pages/pdc1.php");
+//                break;
+//            case 'pdc2':
+//                header("Location: ../pages/pdc2.php");
+//                break;
+//            case 'pdc3':
+//                header("Location: ../pages/pdc3.php");
+//                break;
+            default:
+                header("Location: ../index.php");
+                break;
         }
         exit();
     } else {
-        echo "Nume utilizator sau parolă incorectă!";
+        $_SESSION['error'] = "Nume utilizator sau parolă incorectă!";
+        header("Location: ../actions/login.php");
+        exit();
     }
 }
 ?>

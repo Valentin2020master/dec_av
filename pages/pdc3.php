@@ -79,7 +79,7 @@ if (!isset($_SESSION['user_id'])) {
     </div>
 
 </main>
-<script src="../assets/js/script3.js"></script>
+<script src="../assets/js/script.js"></script>
 
 <?php //include "includes/footer.php"?>
 </body>

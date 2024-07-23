@@ -1,3 +1,84 @@
+body {
+    height: 100%;
+    background: rgb(186, 206, 207)
+}
+
+header {
+    background-color: #0b8d73;
+    padding: 3px;
+    color: #002eff;
+    margin: 0;
+    border: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+header>h3{
+    padding-left: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+  
+header>div{
+    padding-left: 10px;
+}
+
+footer {
+    background-color: #0b8d73;
+    color: #fff;
+    padding: 5px;
+    text-align: center;
+    margin-top: 10px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+
+}
+
+.antet {
+    position: sticky;
+    top: 0;
+    background-color: #61c4eb; /* Setați culoarea de fundal pentru antet */
+    z-index: 10; /* Asigură-te că antetul este deasupra celorlalte rânduri */
+    box-shadow: 0 2px 2px -1px rgba(144, 186, 209, 0.4); /* Adaugă o umbră pentru a sublinia efectul sticky */
+}
+
+
+.subsol {
+    position: sticky;
+    bottom: 0;
+    background-color: #61eb63; /* Setați culoarea de fundal pentru antet */
+    z-index: 10; /* Asigură-te că antetul este deasupra celorlalte rânduri */
+    box-shadow: 0 2px 2px -1px rgba(144, 186, 209, 0.4); /* Adaugă o umbră pentru a sublinia efectul sticky */
+}
+.button {
+    background-color: #002eff; /* Red */
+    color: white;
+    padding: 5px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+}
+
+.button:hover {
+    background-color: #d15959; /* Darker red */
+}
+
+
+.success-message {
+    color: green;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+
+
 thead {
     text-align: center;
 }
@@ -15,9 +96,9 @@ td {
     border: 2px solid #545755;
 }
 
+
 .table-container {
     flex-basis: 50%; /* Lățime inițială de 50% din container */
-    /* table-layout: fixed; */
     table-layout: auto;
     max-height: 700px; /* înălțimea dorită */
     overflow-y: auto; /* scroll vertical */
@@ -25,6 +106,8 @@ td {
     border: 1px solid #ccc; /* bordură pentru a vizualiza mai bine containerul */
 
 }
+
+
 
 .bifate{
     display: grid;
@@ -52,19 +135,11 @@ td {
     width: 60%;
     float: right;
     overflow-x: auto;
-
 }
-/*sursa 06/styles.css*/
-
-body {
-    background: rgb(186, 206, 207)
-}
-
 
 ul {
     list-style: none;
     line-height: 2em;
-
 }
 
 ul summary {
@@ -82,7 +157,6 @@ ul summary::-webkit-details-marker {
 
 ul li {
     position: relative;
-    /*outline: 1px solid green; !*chenar verde*!*/
 }
 
 
@@ -111,12 +185,9 @@ ul li:last-child::after {
     display: none;
 }
 
-
-/*stergem liniile la parinte*/
-ul.tree > li:after, ul.tree > li:before {
-
+/* Aplica stilul doar la ul care sunt copii directe ale td.tree */
+td.tree > ul > li:after, td.tree > ul > li:before {
     display: none;
-
 }
 
 ul summary::before {
@@ -171,68 +242,22 @@ nav ul li a {
     text-decoration: none;
 }
 
-
-.header {
-    background-color: #0b8d73;
-    color: #fff;
-    padding: 15px;
-
-}
-
-
-footer {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
-    text-align: center;
-    margin-top: 10px;
-
-    position: fixed;
-    left: 0;
-    bottom: 0;
+.tab_dreapta .table-container table {
+    table-layout: fixed; /* Asigură layout fix pentru tabel */
     width: 100%;
-
-}
-
-.antet {
-    position: sticky;
-    top: 0;
-    background-color: #61c4eb; /* Setați culoarea de fundal pentru antet */
-    z-index: 10; /* Asigură-te că antetul este deasupra celorlalte rânduri */
-    box-shadow: 0 2px 2px -1px rgba(144, 186, 209, 0.4); /* Adaugă o umbră pentru a sublinia efectul sticky */
+    border-collapse: collapse; /* Elimină spațiile dintre celule */
 }
 
 
-.subsol {
-    position: sticky;
-    bottom: 0;
-    background-color: #61eb63; /* Setați culoarea de fundal pentru antet */
-    z-index: 10; /* Asigură-te că antetul este deasupra celorlalte rânduri */
-    box-shadow: 0 2px 2px -1px rgba(144, 186, 209, 0.4); /* Adaugă o umbră pentru a sublinia efectul sticky */
-}
 
 
-.button {
-    background-color: #002eff; /* Red */
-    color: white;
-    padding: 5px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 14px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border: none;
-    border-radius: 4px;
-}
 
-.button:hover {
-    background-color: #c11c1c; /* Darker red */
-}
-
-
-.success-message {
-    color: green;
-    font-weight: bold;
-    margin-bottom: 10px;
+.oficiu {
+    width: 40%; /* Ajustează această valoare în funcție de numărul de coloane */
+    border: 2px solid #545755;
+    /* padding: 8px; Adaugă padding pentru a face celulele mai spațioase */
+    text-align: center; /* Ajustează alinierea textului după preferință */
+    overflow: hidden; /* Asigură-te că textul prea lung nu va depăși celula */
+    white-space: nowrap; /* Previne trecerea pe linia următoare a textului */
+    text-overflow: ellipsis; /* Adaugă "..." pentru textul prea lung */
 }

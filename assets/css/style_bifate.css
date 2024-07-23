@@ -13,13 +13,13 @@ td {
     border: 2px solid #545755;
 } 
 
-.table-container {
+.table-decon {
     flex-basis: 50%; /* Lățime inițială de 50% din container */
     table-layout: fixed;
-    max-height: 700px; /* înălțimea dorită */
+    max-height: 800px; /* înălțimea dorită */
     overflow-y: auto; /* scroll vertical */
     overflow-x: auto; /* scroll orizontal, dacă este necesar */
-    border: 1px solid #111111; /* bordură pentru a vizualiza mai bine containerul */
+    /* border: 1px solid #111111; bordură pentru a vizualiza mai bine containerul */
  
 }
 

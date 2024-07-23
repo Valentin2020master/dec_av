@@ -4,28 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="creator" content="RED-Nord">
+    <link rel="icon" type="image/x-icon" href="../assets/imagis/red.gif">
     <title>Deconectari avariate</title>
     <link rel="stylesheet" href="../assets/css/style_bifate.css">
     <script src="../assets/js/script_bifate.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Verifică dacă pagina a fost deja redimensionată
-            if (!localStorage.getItem('page_resized')) {
-                // Marime prestabilită
-                var width = 1200;
-                var height = 800;
 
-                // Deschide pagina într-o fereastră nouă cu dimensiunile prestabilite
-                window.open(window.location.href, '_blank', `width=${width},height=${height}`);
-
-                // Setează flag-ul în localStorage
-                localStorage.setItem('page_resized', 'true');
-
-                // Închide fereastra curentă pentru a evita ciclul de redeschidere
-                window.close();
-            }
-        });
-    </script>
     <style>
         .BL { background-color: #FFCDD2; }
         .FR { background-color: #E1BEE7; }
@@ -44,6 +27,11 @@
 </head>
 <body>
 <h2>Deconectari avariate</h2>
+<!-- Câmp de căutare -->
+<div>
+    <label for="searchInput">Caută:</label>
+    <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Caută în deconectari...">
+</div>
 
 <!-- Filtre -->
 <form id="filterForm" method="POST">
@@ -60,8 +48,9 @@
     </div>
 </form>
 
+
 <div>
-    <div class="table-container">
+    <div class="table-decon">
         <table>
             <thead class="antet">
             <tr>
@@ -74,46 +63,46 @@
                 <th>Apartenenta</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody id="dataTable">
             <?php
-            include '../includes/db.php';
+            require_once '../includes/db.php';
 
             $sql = "
-SELECT pdc1.oficiu, pdc1.statiune, pdc1.fider, pdc1.pt, pdc1.localitatea, pdc1.adresa, pdc1.apartenenta
-FROM pdc1
-JOIN bifate1 ON pdc1.pt = bifate1.pt_id
+SELECT dis1.oficiu, dis1.statiune, dis1.fider, dis1.pt, dis1.localitatea, dis1.adresa, dis1.apartenenta
+FROM dis1
+JOIN bifate1 ON dis1.pt = bifate1.pt_id
 WHERE bifate1.bifat = 1";
 
             if (isset($_POST['oficiu']) && !empty($_POST['oficiu'])) {
                 $oficiuFilter = implode("','", array_map([$conn, 'real_escape_string'], $_POST['oficiu']));
-                $sql .= " AND pdc1.oficiu IN ('" . $oficiuFilter . "')";
+                $sql .= " AND dis1.oficiu IN ('" . $oficiuFilter . "')";
             }
 
             $sql .= "
 UNION ALL
 
-SELECT pdc2.oficiu, pdc2.statiune, pdc2.fider, pdc2.pt, pdc2.localitatea, pdc2.adresa, pdc2.apartenenta
-FROM pdc2
-JOIN bifate2 ON pdc2.pt = bifate2.pt_id
+SELECT dis2.oficiu, dis2.statiune, dis2.fider, dis2.pt, dis2.localitatea, dis2.adresa, dis2.apartenenta
+FROM dis2
+JOIN bifate2 ON dis2.pt = bifate2.pt_id
 WHERE bifate2.bifat = 1";
 
             if (isset($_POST['oficiu']) && !empty($_POST['oficiu'])) {
-                $sql .= " AND pdc2.oficiu IN ('" . $oficiuFilter . "')";
+                $sql .= " AND dis2.oficiu IN ('" . $oficiuFilter . "')";
             }
 
             $sql .= "
 UNION ALL
 
-SELECT pdc3.oficiu, pdc3.statiune, pdc3.fider, pdc3.pt, pdc3.localitatea, pdc3.adresa, pdc3.apartenenta
-FROM pdc3
-JOIN bifate3 ON pdc3.pt = bifate3.pt_id
+SELECT dis3.oficiu, dis3.statiune, dis3.fider, dis3.pt, dis3.localitatea, dis3.adresa, dis3.apartenenta
+FROM dis3
+JOIN bifate3 ON dis3.pt = bifate3.pt_id
 WHERE bifate3.bifat = 1";
 
             if (isset($_POST['oficiu']) && !empty($_POST['oficiu'])) {
-                $sql .= " AND pdc3.oficiu IN ('" . $oficiuFilter . "')";
+                $sql .= " AND dis3.oficiu IN ('" . $oficiuFilter . "')";
             }
 
-            $sql .= " ORDER BY oficiu";
+            $sql .= " ORDER BY oficiu, statiune";
 
             $result = $conn->query($sql);
 
@@ -135,7 +124,7 @@ WHERE bifate3.bifat = 1";
                     echo "</tr>";
                 }
             } else {
-                echo "<tr><td colspan='7'>Nu sunt deconectari.</td></tr>";
+                echo "<tr><td colspan='7'>Nu sunt deconectari avariate.</td></tr>";
             }
 
             $conn->close();
@@ -144,5 +133,34 @@ WHERE bifate3.bifat = 1";
         </table>
     </div>
 </div>
+
+<script>
+    function searchTable() {
+        const input = document.getElementById("searchInput");
+        const filter = input.value.toUpperCase();
+        const table = document.getElementById("dataTable");
+        const rows = table.getElementsByTagName("tr");
+
+        for (let i = 0; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName("td");
+            let match = false;
+
+            for (let j = 0; j < cells.length; j++) {
+                if (cells[j]) {
+                    if (cells[j].innerText.toUpperCase().indexOf(filter) > -1) {
+                        match = true;
+                        break;
+                    }
+                }
+            }
+
+            if (match) {
+                rows[i].style.display = "";
+            } else {
+                rows[i].style.display = "none";
+            }
+        }
+    }
+</script>
 </body>
 </html>

@@ -1,32 +1,53 @@
 <?php
-include '../includes/db.php';
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+include(__DIR__ . '/../includes/db.php');
+
+// Funcția getTableForUser care returnează tabela specifică utilizatorului
+function getTableForUser($username) {
+    // Mapping utilizator -> tabel
+    $userTableMapping = [
+        'pdc1' => 'bifate1',
+        'pdc2' => 'bifate2',
+        'pdc3' => 'bifate3',
+        // adaugă mai multe mappări după necesitate
+    ];
+
+    return isset($userTableMapping[$username]) ? $userTableMapping[$username] : 'pdc1';
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $pt = $_POST['pt'];
-    $checked = $_POST['checked'];
+    session_start(); // Începe sesiunea pentru a accesa variabila de sesiune
+    $username = $_SESSION['username']; // Preia numele utilizatorului din sesiune
+    $checkboxes = json_decode(file_get_contents('php://input'), true);
 
-    // Asigură-te că $pt și $checked sunt sanitizate
-    $pt = $conn->real_escape_string($pt);
-    $checked = (int)$checked;
+    // Obține tabelul specific utilizatorului curent
+    $table = getTableForUser($username);
 
-    // Verifică dacă există deja o înregistrare pentru acest pt
-    $sql = "SELECT * FROM stare_bifata WHERE pt_id = '$pt'";
-    $result = $conn->query($sql);
+    foreach ($checkboxes as $checkbox) {
+        $pt = $conn->real_escape_string($checkbox['pt']);
+        $checked = (int)$checkbox['checked'];
 
-    if ($result->num_rows > 0) {
-        // Actualizează starea dacă există deja înregistrarea
-        $sql = "UPDATE stare_bifata SET bifat = '$checked' WHERE pt_id = '$pt'";
-    } else {
-        // Inserează o nouă înregistrare dacă nu există
-        $sql = "INSERT INTO stare_bifata (pt_id, bifat) VALUES ('$pt', '$checked')";
+        // Verifică dacă există deja o înregistrare pentru acest pt
+        $sql = "SELECT * FROM $table WHERE pt_id = '$pt'";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+            // Actualizează starea dacă există deja înregistrarea
+            $sql = "UPDATE $table SET bifat = '$checked' WHERE pt_id = '$pt'";
+        } else {
+            // Inserează o nouă înregistrare dacă nu există
+            $sql = "INSERT INTO $table (pt_id, bifat) VALUES ('$pt', '$checked')";
+        }
+
+        if (!$conn->query($sql)) {
+            echo "Eroare la actualizarea stării checkboxului: " . $conn->error;
+            exit;
+        }
     }
 
-    if ($conn->query($sql) === TRUE) {
-        echo "Starea checkboxului a fost actualizată cu succes.";
-    } else {
-        echo "Eroare la actualizarea stării checkboxului: " . $conn->error;
-    }
-
+    echo "Starea checkboxurilor a fost actualizată cu succes.";
     $conn->close();
 }
-?>
